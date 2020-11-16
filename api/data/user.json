@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Admin001",
+    "userName": "admin001",
+    "lastName": "",
+    "email": "admin@gmail.com",
+    "password": "adminuser",
+    "roleId": "5fafe53332496d60b0bc38c8"
+  },
+  {
+    "firstName": "John",
+    "userName": "johnny",
+    "lastName": "Doe",
+    "email": "johndoe@gmail.com",
+    "password": "johndoe",
+    "roleId": "5fafe53332496d60b0bc38c9"
+  },
+  {
+    "firstName": "Jane",
+    "userName": "jane",
+    "lastName": "Doe",
+    "email": "janedoe@gmail.com",
+    "password": "janedoe",
+    "roleId": "5fafe53332496d60b0bc38c9"
+  }
+]
