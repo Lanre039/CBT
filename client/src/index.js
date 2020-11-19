@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./styles/tailwind.css";
 import App from "./App";
 import { CourseSelection, TestSelection } from "./pages";
+import Exam from "./pages/Exam/Exam";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Route path="/" exact component={App} />
       <Route path="/select" exact component={CourseSelection} />
       <Route path="/take-exam" exact component={TestSelection} />
+      <Route path="/exam" exact component={Exam} />
     </Switch>
   </BrowserRouter>,
 
