@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const CourseSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   code: {
     type: String,
     required: true,
@@ -14,12 +10,21 @@ const CourseSchema = new Schema({
     type: String,
     required: true,
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
   question: [
     {
       type: Schema.Types.ObjectId,
       ref: "Question",
     },
   ],
+  isAvailable: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Course", CourseSchema);
