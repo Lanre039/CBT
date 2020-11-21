@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { examPortal } from "../../api";
 import ModalPage from "./Modal";
 
@@ -6,7 +7,7 @@ const CoursesPage = () => {
   const [displayModal, setDisplayModal] = useState(false);
   const [fetchedData, setFetchedData] = useState(null);
   const [formData, setFormData] = useState({});
-
+  let history = useHistory();
   useEffect(() => {
     async function saveData() {
       try {
@@ -48,8 +49,9 @@ const CoursesPage = () => {
         {fetchedData.map(({ code, title, questions }, index) => {
           return (
             <div
-              className="w-1/3 mb-10 hover:bg-purple-200 p-4 rounded"
+              className="w-1/3 mb-10 hover:bg-purple-200 p-4 rounded cursor-pointer"
               key={index}
+              onClick={() => history.push("/create-questions")}
             >
               <h1 className="font-semibold text-purple-800 text-2xl">
                 {code.toUpperCase()}
