@@ -15,33 +15,30 @@ const customStyles = {
   },
 };
 
-function ModalPage({ modalIsOpen, setIsOpen }) {
-  //   const [formData, setFormData] = useState(null);
+function ModalPage({ modalIsOpen, setIsOpen, setFormData }) {
   const [courseCode, setCourseCode] = useState("");
   const [courseTitle, setCourseTitle] = useState("");
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function handleFormData(e) {
-    e.preventDefault();
-    // console.log("code", courseCode);
-    const dataToBeSent = {
-      code: courseCode,
-      title: courseTitle,
-    };
-    console.log("data", dataToBeSent);
-    setCourseCode("");
-    setCourseTitle("");
-  }
 
   function closeModal() {
     setIsOpen(false);
   }
 
+  function handleFormData(e) {
+    e.preventDefault();
+
+    const dataToBeSent = {
+      code: courseCode,
+      title: courseTitle,
+    };
+    setFormData(dataToBeSent);
+    setCourseCode("");
+    setCourseTitle("");
+
+    closeModal();
+  }
+
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
       <Modal
         isOpen={modalIsOpen}
         // onAfterOpen={afterOpenModal}
@@ -96,6 +93,7 @@ function ModalPage({ modalIsOpen, setIsOpen }) {
               <button
                 className="shadow bg-purple-800 hover:bg-purple-700 text-white font-bold p-3 mt-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
+                disabled={!courseCode && !courseTitle}
               >
                 Publish
               </button>

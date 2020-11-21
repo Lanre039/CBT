@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const { seedDatabaseWithRoles } = require("./seeders/roleSeeder");
 const { seedDatabaseWithUsers } = require("./seeders/userSeeder");
 const TestRoute = require("./routes/TestRoute");
@@ -11,6 +12,27 @@ const UserRoute = require("./routes/UserRoute");
 
 const app = express();
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Accept, X-Requested-With, Authorization, Content-Type, x-custom-header"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,PUT,POST,PATCH,DELETE,OPTIONS"
+  );
+  next();
+});
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: "GET,PUT,POST,PATCH,DELETE,OPTIONS",
+  })
+);
 
 //ROUTES
 app.use(TestRoute);

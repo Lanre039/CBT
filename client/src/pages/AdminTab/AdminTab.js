@@ -4,6 +4,7 @@ import StudentsPage from "./StudentsPage";
 
 function AdminTab(props) {
   const [currentTab, setCurrentTab] = useState("courses");
+
   const renderActualPage = () => {
     switch (currentTab) {
       case "courses":

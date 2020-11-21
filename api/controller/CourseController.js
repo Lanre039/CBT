@@ -6,7 +6,7 @@ module.exports = {
     const { roleId } = req.user;
     const { code: courseCode, title } = req.body;
 
-    if (!name || !courseCode || !title) {
+    if (!courseCode || !title) {
       return res.status(400).send({ err: "One or more fields is empty" });
     }
 
@@ -34,7 +34,7 @@ module.exports = {
   getAllCourses: async (req, res, next) => {
     try {
       const courses = await CourseService.getAllCourses();
-      return res.status(200).send(courses);
+      return res.status(200).send({ courses });
     } catch (err) {
       console.log(err);
       res.status(500).send(err);

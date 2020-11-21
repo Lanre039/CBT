@@ -7,8 +7,8 @@ const {
 } = require("../controller/UserController");
 const auth = require("../middleware/auth");
 
-router.post("/user/register-courses", auth, registerUserCourses);
-router.post("/user/questions", auth, saveUserResult);
-router.get("/user/:courseId/result", auth, fetchUserResult);
+router.post("/api/user/register-courses", auth, registerUserCourses);
+router.post("/api/user/questions", auth, saveUserResult);
+router.get("/api/user/:courseId/result", auth, fetchUserResult);
 
 module.exports = router;

@@ -15,7 +15,7 @@ const CourseSchema = new Schema({
     required: true,
     ref: "User",
   },
-  question: [
+  questions: [
     {
       type: Schema.Types.ObjectId,
       ref: "Question",
