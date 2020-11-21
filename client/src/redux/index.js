@@ -1,8 +1,9 @@
-import { testReducer } from "./client";
+import { loginReducer, testReducer } from "./client";
 const { combineReducers } = require("redux");
 
 const reducer = combineReducers({
-  test: testReducer
+  test: testReducer,
+  login: loginReducer
 });
 
 export default reducer
