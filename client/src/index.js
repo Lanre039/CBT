@@ -8,6 +8,7 @@ import App from "./App";
 import { CourseSelection, TestSelection } from "./pages";
 import AdminTab from "./pages/AdminTab/AdminTab";
 import Exam from "./pages/Exam/Exam";
+import QuestionsPage from "./pages/AdminTab/QuestionsPage";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -17,6 +18,7 @@ ReactDOM.render(
       <Route path="/take-exam" exact component={TestSelection} />
       <Route path="/admin" exact component={AdminTab} />
       <Route path="/exam" exact component={Exam} />
+      <Route path="/create-questions" exact component={QuestionsPage} />
     </Switch>
   </BrowserRouter>,
 
