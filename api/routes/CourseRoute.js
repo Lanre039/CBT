@@ -7,8 +7,8 @@ const {
   getCourseById,
 } = require("../controller/CourseController");
 
-router.post("/create-course", auth, createCourse);
-router.get("/courses", getAllCourses);
-router.get("/course/:id", getCourseById);
+router.post("/api/create-course", auth, createCourse);
+router.get("/api/courses", getAllCourses);
+router.get("/api/course/:id", getCourseById);
 
 module.exports = router;

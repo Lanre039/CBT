@@ -38,7 +38,6 @@ module.exports = {
       }
 
       return res.status(201).send({ result });
-      return res.status(201).send({ result });
     } catch (err) {
       console.log(err);
       return res.status(404).send({ err: "User not found" });

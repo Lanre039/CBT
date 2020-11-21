@@ -6,7 +6,7 @@ const {
 } = require("../controller/QuestionController");
 const auth = require("../middleware/auth");
 
-router.post("/create-question", auth, createQuestion);
-router.get("/questions", auth, getRandomQuestionsInBatches);
+router.post("/api/create-question", auth, createQuestion);
+router.get("/api/questions", auth, getRandomQuestionsInBatches);
 
 module.exports = router;

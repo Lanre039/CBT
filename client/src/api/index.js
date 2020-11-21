@@ -1,29 +1,16 @@
-import axios from 'axios'
+import axios from "axios";
 
 // fetch token from localStorage
-const token = '....something'
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYWZmZjY3NGI5MjY2NTAzY2JjZjkyMyIsInJvbGVJZCI6IjVmYWZlNTMzMzI0OTZkNjBiMGJjMzhjOCIsImlhdCI6MTYwNTk0MTI3MywiZXhwIjoxNjA1OTQ0ODczfQ.ywPmnqgJlGjGJ9PaLVBgjQHOK1Qf1xPkyR-CCbansjY";
 
 export const examPortal = axios.create({
-  baseURL: "localhost:4000/api",
+  baseURL: "http://localhost:5000/api",
   headers: {
-    "Authorization": `bearer ${token}`,
-    "Content-Type": "application/json"
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
     // add other headers here
-  }
-})
-
-
-// so just import the examPortal function from anywhere you want to make an api call
-
-/**
- * import examPortal from '..../././././'
-
-const response = await examPortal.post('/questions', {
-  body goes here
-})
-
-OR
-
-const response = await examPortal.get('/questions')
-
-**/
+  },
+  timeout: 1000,
+  withCredentials: true,
+});

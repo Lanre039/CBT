@@ -4,9 +4,9 @@ const RoleService = require("../services/RoleService");
 module.exports = {
   createCourse: async (req, res, next) => {
     const { roleId } = req.user;
-    const { name, code: courseCode, title } = req.body;
+    const { code: courseCode, title } = req.body;
 
-    if (!name || !courseCode || !title) {
+    if (!courseCode || !title) {
       return res.status(400).send({ err: "One or more fields is empty" });
     }
 
@@ -20,9 +20,9 @@ module.exports = {
       }
 
       const createCourse = await CourseService.createCourse({
-        name: name.trim(),
         code: courseCode.trim(),
         title: title.trim(),
+        owner: roleId,
       });
 
       return res.status(201).send({ course: createCourse });
@@ -34,7 +34,7 @@ module.exports = {
   getAllCourses: async (req, res, next) => {
     try {
       const courses = await CourseService.getAllCourses();
-      return res.status(200).send(courses);
+      return res.status(200).send({ courses });
     } catch (err) {
       console.log(err);
       res.status(500).send(err);
