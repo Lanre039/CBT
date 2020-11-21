@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { seedDatabaseWithRoles } = require("./seeders/roleSeeder");
 const { seedDatabaseWithUsers } = require("./seeders/userSeeder");
-const TestRoute = require("./routes/TestRoute");
 const AuthRoute = require("./routes/AuthRoute");
 const CourseRoute = require("./routes/CourseRoute");
 const QuestionRoute = require("./routes/QuestionRoute");
 const UserRoute = require("./routes/UserRoute");
+const RoleRoute = require("./routes/RoleRoute");
 
 const app = express();
 app.use(express.json());
@@ -35,11 +35,11 @@ app.use(
 );
 
 //ROUTES
-app.use(TestRoute);
 app.use(AuthRoute);
 app.use(CourseRoute);
 app.use(QuestionRoute);
 app.use(UserRoute);
+app.use(RoleRoute);
 
 const PORT = process.env.port || 8000;
 app.listen(PORT, () => {
