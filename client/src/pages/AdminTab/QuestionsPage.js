@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import AccordionComponent from "./components/Accordion";
+import React from 'react';
+import AccordionComponent from './components/Accordion';
 
 function QuestionsPage(props) {
   // const [formData, setFormData] = useState([]);

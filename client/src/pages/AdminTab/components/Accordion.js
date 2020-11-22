@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Accordion } from "react-accessible-accordion";
+import React, { useState } from 'react';
+import { Accordion } from 'react-accessible-accordion';
 
-import AccordionContent from "./AccordionContent";
-import "react-accessible-accordion/dist/fancy-example.css";
+import AccordionContent from './AccordionContent';
+import 'react-accessible-accordion/dist/fancy-example.css';
 
 function AccordionComponent(props) {
   const [items, setItems] = useState([]);
   const [formData, setFormData] = useState([]);
 
   const setDefaultItem = () => {
-    const ids = [1, 2, 3];
+    const ids = [1, 2];
     return ids.map((id) => (
       <AccordionContent
         setFormData={setFormData}
@@ -28,7 +28,7 @@ function AccordionComponent(props) {
     const newId = items.length + 1;
 
     if (items.length === 5) {
-      alert("You can only create five questions");
+      alert('You can only create five questions');
       return;
     }
 
@@ -43,7 +43,17 @@ function AccordionComponent(props) {
     ]);
   };
 
-  console.log(formData);
+  const handleSubmit = () => {
+    const courseId = 'dummy';
+    const dataToBeSubmitted = {
+      courseId,
+      formData,
+    };
+
+    console.log(dataToBeSubmitted);
+  };
+
+  // console.log(formData);
 
   return (
     <div>
@@ -58,7 +68,7 @@ function AccordionComponent(props) {
         </button>
         <button
           className="shadow bg-purple-800 hover:bg-purple-700 text-white font-bold  p-3 mt-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={addMoreQuestions}
+          onClick={handleSubmit}
           // disabled={!courseCode && !courseTitle}
         >
           Publish

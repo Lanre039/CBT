@@ -1,28 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   AccordionItem,
   AccordionItemButton,
   AccordionItemHeading,
   AccordionItemPanel,
-} from "react-accessible-accordion";
-
-const dataFormat = {
-  question: "",
-  answer: "",
-  optionA: "",
-  optionB: "",
-  optionC: "",
-  optionD: "",
-};
+} from 'react-accessible-accordion';
 
 const AccordionContent = ({ id, formData, setFormData }) => {
-  const [data, setData] = useState(dataFormat);
+  const [data, setData] = useState({});
 
-  const handSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(data);
     setFormData([...formData, data]);
-    setData({ dataFormat });
   };
 
   return (
@@ -31,7 +21,7 @@ const AccordionContent = ({ id, formData, setFormData }) => {
         <AccordionItemButton>{`Question ${id}`}</AccordionItemButton>
       </AccordionItemHeading>
       <AccordionItemPanel>
-        <form onSubmit={handSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="flex justify-between">
             <div className="mr-5">
               <textarea
@@ -39,8 +29,8 @@ const AccordionContent = ({ id, formData, setFormData }) => {
                 cols="50"
                 rows="9"
                 placeholder="Enter question here..."
-                // value={data.question}
-                onChange={(e) => setData((data.question = e.target.value))}
+                value={data['question']}
+                onChange={(e) => setData((data['question'] = e.target.value))}
               ></textarea>
               <input
                 className="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -48,8 +38,8 @@ const AccordionContent = ({ id, formData, setFormData }) => {
                 type="text"
                 placeholder="Enter correct option here..."
                 maxLength={1}
-                // value={data.answer}
-                onChange={(e) => setData((data.answer = e.target.value))}
+                value={data['answer']}
+                onChange={(e) => setData((data['answer'] = e.target.value))}
               />
             </div>
             <div>
@@ -58,32 +48,32 @@ const AccordionContent = ({ id, formData, setFormData }) => {
                 id="username"
                 type="text"
                 placeholder="Enter option a"
-                // value={data.optionA}
-                onChange={(e) => setData((data.optionA = e.target.value))}
+                value={data['optionA']}
+                onChange={(e) => setData((data['optionA'] = e.target.value))}
               />
               <input
                 className="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
                 placeholder="Enter option b"
-                // value={data.optionB}
-                onChange={(e) => setData((data.optionB = e.target.value))}
+                value={data['optionB']}
+                onChange={(e) => setData((data['optionB'] = e.target.value))}
               />
               <input
                 className="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
                 placeholder="Enter option c"
-                // value={data.optionC}
-                onChange={(e) => setData((data.optionC = e.target.value))}
+                value={data['optionC']}
+                onChange={(e) => setData((data['optionC'] = e.target.value))}
               />
               <input
                 className="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
                 placeholder="Enter option d"
-                // value={data.optionD}
-                onChange={(e) => setData((data.optionD = e.target.value))}
+                value={data['optionD']}
+                onChange={(e) => setData((data['optionD'] = e.target.value))}
               />
               <button
                 type="submit"

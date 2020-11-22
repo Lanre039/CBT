@@ -10,17 +10,27 @@ import AdminTab from "./pages/AdminTab/AdminTab";
 import Exam from "./pages/Exam/Exam";
 import QuestionsPage from "./pages/AdminTab/QuestionsPage";
 
+// redux things
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducer from "./redux";
+
+const store = createStore(reducer);
+// redux things
+
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/" exact component={App} />
-      <Route path="/select" exact component={CourseSelection} />
-      <Route path="/take-exam" exact component={TestSelection} />
-      <Route path="/admin" exact component={AdminTab} />
-      <Route path="/exam" exact component={Exam} />
-      <Route path="/create-questions" exact component={QuestionsPage} />
-    </Switch>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact component={App} />
+        <Route path="/select" exact component={CourseSelection} />
+        <Route path="/take-exam" exact component={TestSelection} />
+        <Route path="/admin" exact component={AdminTab} />
+        <Route path="/exam" exact component={Exam} />
+        <Route path="/create-questions" exact component={QuestionsPage} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
 
   document.getElementById("root")
 );
