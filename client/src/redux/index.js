@@ -1,9 +1,9 @@
-import { loginReducer, testReducer, formReducer } from './client';
-const { combineReducers } = require('redux');
+import { loginReducer, formReducer, rolesReducer } from './client';
+import { combineReducers } from 'redux';
 
 const reducer = combineReducers({
-  test: testReducer,
   login: loginReducer,
+  roles: rolesReducer,
   questions: formReducer,
 });
 

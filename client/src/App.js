@@ -1,32 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { examPortal } from "./api";
 import "./App.css";
+import { useAuth } from "./hooks";
 import { types } from "./redux/types";
 const App = () => {
+  const [loginError, setLoginError] = useState(false);
   const { username, password } = useSelector((state) => state.login);
   const dispatch = useDispatch();
+  let history = useHistory();
+  // const authenticatedAsUser = useAuth();
+
+  const { roles } = useSelector((state) => state.roles);
+
+  useEffect(() => {
+    const clearSessionStorage = () => {
+      sessionStorage.clear();
+    };
+    clearSessionStorage();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // console.log(username, password);
 
-    const response = await examPortal.post("/login", {
-      userName: username,
-      password,
-    });
+    try {
+      const response = await examPortal.post("/login", {
+        userName: username,
+        password,
+      });
 
-    const { token } = response.data
-    localStorage.setItem("cbt_token", token)
+      const { token } = response.data;
+      const { roleId } = response.data.user;
 
-    const {roleId} = response.data.user
-    
+      const checkRoleId = () => roles.find((role) => role._id === roleId);
 
-    console.log(response);
+      const userRole = checkRoleId().code;
+
+      if (userRole === "normal_user") {
+        sessionStorage.setItem("cbt_user_token", token);
+        history.push("/select");
+      } else if (userRole === "admin_user") {
+        sessionStorage.setItem("cbt_admin_token", token);
+        history.push("/admin");
+      } else {
+        throw new Error("An error occured");
+      }
+
+      // dispatch({
+      //   type: types.SET_ROLE_ID,
+      //   payload: roleId,
+      // });
+
+      // if() {
+      //   history.push("/select");
+      // } else {
+      //   history.push("/admin");
+      // }
+    } catch (error) {
+      setLoginError(true);
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    setLoginError(false);
     dispatch({
       type: types.LOGIN,
       payload: {
@@ -34,9 +72,11 @@ const App = () => {
         value,
       },
     });
-
-    // console.log(name, value)
   };
+
+  const inputClass = `appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-none
+  ${loginError ? "border-red-600" : " border-gray-300"}
+`;
 
   return (
     <div className="App">
@@ -50,6 +90,11 @@ const App = () => {
           </p>
         </article>
         <div className="w-1/2 max-w-sm">
+          {loginError && (
+            <div className=" bg-red-100 text-red-800 font-semibold shadow-md rounded px-8 py-2 my-4">
+              {"Error occured, check your credentials"}
+            </div>
+          )}
           <form
             className=" bg-white shadow-md rounded px-8 py-8 pt-8"
             onSubmit={handleLogin}
@@ -62,7 +107,7 @@ const App = () => {
                 type="text"
                 name="username"
                 value={username}
-                className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-none border-gray-300 "
+                className={inputClass}
                 placeholder="123456789"
                 onChange={handleInputChange}
               />
@@ -78,7 +123,7 @@ const App = () => {
                 type="password"
                 name="password"
                 value={password}
-                className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-none border-gray-300"
+                className={inputClass}
                 placeholder="Enter your password"
                 onChange={handleInputChange}
               />
