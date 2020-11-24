@@ -1,10 +1,28 @@
 const Question = require("../models/Question");
 
 module.exports = {
+  processFormData: async function (courseId, data) {
+    const formatData = data.map((item) => ({
+      courseId,
+      question: item.question,
+      answer: item.answer,
+      options: [
+        { a: item.optionA },
+        { b: item.optionB },
+        { c: item.optionC },
+        { d: item.optionD },
+      ],
+    }));
+
+    return await formatData;
+  },
   createQuestion: async function (data) {
     try {
-      const saveQuestion = await new Question({ ...data }).save();
-      return saveQuestion;
+      let savedData = [];
+      for (const item of data) {
+        savedData = [...savedData, await new Question({ ...item }).save()];
+      }
+      return await savedData;
     } catch (err) {
       console.log(err);
       return null;

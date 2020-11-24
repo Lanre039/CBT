@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { examPortal } from "../../api";
-import ModalPage from "./Modal";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { examPortal } from '../../api';
+import ModalPage from './Modal';
 
 const CoursesPage = () => {
   const [displayModal, setDisplayModal] = useState(false);
@@ -13,7 +13,7 @@ const CoursesPage = () => {
       try {
         const {
           data: { course },
-        } = await examPortal.post("/create-course", formData);
+        } = await examPortal.post('/create-course', formData);
 
         setFetchedData([...fetchedData, course]);
       } catch (error) {
@@ -25,7 +25,7 @@ const CoursesPage = () => {
       try {
         const {
           data: { courses },
-        } = await examPortal.get("/courses");
+        } = await examPortal.get('/courses');
 
         setFetchedData(courses);
       } catch (error) {
@@ -46,12 +46,12 @@ const CoursesPage = () => {
   const renderData = () => {
     return (
       <div className="flex flex-wrap m-20 mb-0 py-10 px-1">
-        {fetchedData.map(({ code, title, questions }, index) => {
+        {fetchedData.map(({ _id, code, title, questions }, index) => {
           return (
             <div
               className="w-1/3 mb-10 hover:bg-purple-200 p-4 rounded cursor-pointer"
               key={index}
-              onClick={() => history.push("/create-questions")}
+              onClick={() => history.push(`/create-questions/${_id}`)}
             >
               <h1 className="font-semibold text-purple-800 text-2xl">
                 {code.toUpperCase()}
@@ -59,7 +59,7 @@ const CoursesPage = () => {
               <h2 className="text-sm">{title}</h2>
               <p className="text-sm">
                 Number of questions - &nbsp;
-                {questions.length === 0 ? "Nill" : questions.length}
+                {questions.length === 0 ? 'Nill' : questions.length}
               </p>
             </div>
           );
@@ -81,7 +81,7 @@ const CoursesPage = () => {
       </div>
       <div className="flex justify-end pr-10 pb-10 cursor-pointer">
         <span
-          style={{ fontSize: "4.5rem" }}
+          style={{ fontSize: '4.5rem' }}
           className="material-icons text-white bg-purple-800 rounded-full flex items-center justify-center shadow-lg"
           onClick={() => setDisplayModal(true)}
         >
