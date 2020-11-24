@@ -4,15 +4,15 @@ const RoleService = require("../services/RoleService");
 module.exports = {
   createQuestion: async (req, res, next) => {
     const { roleId } = req.user;
-    const { courseId, question, options, answer } = req.body;
+    const { courseId, data } = req.body;
+    // console.log(data);
+    // if (!courseId || !question || !answer) {
+    //   return res.status(400).send({ err: "One or more fields are empty" });
+    // }
 
-    if (!courseId || !question || !answer) {
-      return res.status(400).send({ err: "One or more fields are empty" });
-    }
-
-    if (options.length < 2) {
-      return res.status(400).send({ err: "One or more fields are empty" });
-    }
+    // if (options.length < 2) {
+    //   return res.status(400).send({ err: "One or more fields are empty" });
+    // }
 
     try {
       const { code } = await RoleService.getRoleById(roleId);
@@ -22,15 +22,10 @@ module.exports = {
           .status(401)
           .send({ err: "Unathorized to perform this action" });
       }
+      const formatData = await QuestionService.processFormData(courseId, data);
+      const createQuestion = await QuestionService.createQuestion(formatData);
 
-      const createQuestion = await QuestionService.createQuestion({
-        courseId,
-        question: question.trim(),
-        options,
-        answer: answer.trim(),
-      });
-
-      return res.status(201).send({ question: createQuestion });
+      return res.status(201).send({ questions: createQuestion });
     } catch (err) {
       console.log(err);
       res.status(400).send(err);

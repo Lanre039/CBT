@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { Accordion } from 'react-accessible-accordion';
-
+import { useSelector } from 'react-redux';
 import AccordionContent from './AccordionContent';
 import 'react-accessible-accordion/dist/fancy-example.css';
+import { withRouter } from 'react-router-dom';
+import { examPortal } from '../../../api';
 
-function AccordionComponent(props) {
+function AccordionComponent({ match }) {
   const [items, setItems] = useState([]);
-  const [formData, setFormData] = useState([]);
+
+  const {
+    questions: { formData },
+  } = useSelector((state) => state);
 
   const setDefaultItem = () => {
     const ids = [1, 2];
-    return ids.map((id) => (
-      <AccordionContent
-        setFormData={setFormData}
-        formData={formData}
-        key={id}
-        id={id}
-      />
-    ));
+    return ids.map((id) => <AccordionContent key={id} id={id} />);
   };
 
   if (items.length <= 0) {
@@ -32,44 +30,32 @@ function AccordionComponent(props) {
       return;
     }
 
-    setItems([
-      ...items,
-      <AccordionContent
-        setFormData={setFormData}
-        formData={formData}
-        key={newId}
-        id={newId}
-      />,
-    ]);
+    setItems([...items, <AccordionContent key={newId} id={newId} />]);
   };
 
-  const handleSubmit = () => {
-    const courseId = 'dummy';
-    const dataToBeSubmitted = {
+  const handleSubmit = async () => {
+    const courseId = match.params.courseId;
+
+    const data = await examPortal.post('/create-question', {
       courseId,
-      formData,
-    };
-
-    console.log(dataToBeSubmitted);
+      data: formData,
+    });
+    console.log(data);
   };
-
-  // console.log(formData);
 
   return (
-    <div>
+    <div className="m-5 mt-10">
       <Accordion preExpanded={[1]}>{items}</Accordion>
       <div className="flex justify-between">
         <button
           className="shadow bg-purple-800 hover:bg-purple-700 text-white font-bold  p-3 mt-4 rounded focus:outline-none focus:shadow-outline"
           onClick={addMoreQuestions}
-          // disabled={!courseCode && !courseTitle}
         >
           Add Question
         </button>
         <button
           className="shadow bg-purple-800 hover:bg-purple-700 text-white font-bold  p-3 mt-4 rounded focus:outline-none focus:shadow-outline"
           onClick={handleSubmit}
-          // disabled={!courseCode && !courseTitle}
         >
           Publish
         </button>
@@ -78,4 +64,4 @@ function AccordionComponent(props) {
   );
 }
 
-export default AccordionComponent;
+export default withRouter(AccordionComponent);
