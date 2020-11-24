@@ -5,7 +5,7 @@
     "lastName": "",
     "email": "admin@gmail.com",
     "password": "adminuser",
-    "roleId": "5fafe53332496d60b0bc38c8"
+    "roleId": "5fb94e35abab9450b0b71b68"
   },
   {
     "firstName": "John",
@@ -13,7 +13,7 @@
     "lastName": "Doe",
     "email": "johndoe@gmail.com",
     "password": "johndoe",
-    "roleId": "5fafe53332496d60b0bc38c9"
+    "roleId": "5fb94e35abab9450b0b71b69"
   },
   {
     "firstName": "Jane",
@@ -21,6 +21,6 @@
     "lastName": "Doe",
     "email": "janedoe@gmail.com",
     "password": "janedoe",
-    "roleId": "5fafe53332496d60b0bc38c9"
+    "roleId": "5fb94e35abab9450b0b71b69"
   }
 ]
