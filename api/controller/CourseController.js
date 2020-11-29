@@ -32,8 +32,17 @@ module.exports = {
     }
   },
   getAllCourses: async (req, res, next) => {
+    const { roleId } = req.user;
     try {
-      const courses = await CourseService.getAllCourses();
+      const { code } = await RoleService.getRoleById(roleId);
+
+      if (code !== "admin_user") {
+        return res
+          .status(401)
+          .send({ err: "Unathorized to perform this action" });
+      }
+
+      const courses = await CourseService.getAllCourses(roleId);
       return res.status(200).send({ courses });
     } catch (err) {
       console.log(err);
@@ -47,6 +56,24 @@ module.exports = {
       return res.status(200).send(courses);
     } catch (err) {
       console.log(err);
+      res.status(500).send(err);
+    }
+  },
+  changeCourseStatus: async (req, res, next) => {
+    const { roleId } = req.user;
+    const { id } = req.body;
+    try {
+      const { code } = await RoleService.getRoleById(roleId);
+
+      if (code !== "admin_user") {
+        return res
+          .status(401)
+          .send({ err: "Unathorized to perform this action" });
+      }
+      const courses = await CourseService.changeCourseStatus(id);
+      return res.status(200).send("Status changed successfully!");
+    } catch (error) {
+      console.log(error);
       res.status(500).send(err);
     }
   },
