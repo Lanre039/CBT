@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // import * as serviceWorker from './serviceWorker';
@@ -12,30 +12,35 @@ import QuestionsPage from './pages/AdminTab/QuestionsPage';
 import UserRoute from './components/UserRoute';
 
 // redux things
-import { createStore } from 'redux';
-import { Provider, useDispatch } from 'react-redux';
-import reducer from './redux';
-import { examPortal } from './api';
+import { applyMiddleware, createStore } from 'redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { useToken } from './api/useToken';
 import { types } from './redux/types';
+import reducer from './redux';
 import AdminRoute from './components/AdminRoute';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(...[])));
 // redux things
 
 const Main = () => {
   const dispatch = useDispatch();
+  // const { token } = useSelector((state) => state.tokens);
+  const examPortal = useToken();
+
+  const getRoles = useCallback(async () => {
+    const response = await examPortal.get('/roles');
+    const { roles } = response.data;
+
+    dispatch({
+      type: types.SET_ROLES,
+      payload: roles,
+    });
+  }, [examPortal, dispatch]);
 
   useEffect(() => {
-    (async function getRoles() {
-      const response = await examPortal.get('/roles');
-      const { roles } = response.data;
-
-      dispatch({
-        type: types.SET_ROLES,
-        payload: roles,
-      });
-    })();
-  }, [dispatch]);
+    getRoles();
+  }, [getRoles]);
 
   return (
     <BrowserRouter>

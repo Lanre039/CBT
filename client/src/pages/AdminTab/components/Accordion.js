@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import AccordionContent from './AccordionContent';
 import 'react-accessible-accordion/dist/fancy-example.css';
 import { withRouter } from 'react-router-dom';
-import { examPortal } from '../../../api';
+import { useToken } from '../../../api/useToken';
 
 function AccordionComponent({ match }) {
   const [items, setItems] = useState([]);
-
+  const examPortal = useToken();
   const {
     questions: { formData },
   } = useSelector((state) => state);
@@ -44,7 +44,7 @@ function AccordionComponent({ match }) {
   };
 
   return (
-    <div className="m-5 mt-10">
+    <div className="mt-10">
       <Accordion preExpanded={[1]}>{items}</Accordion>
       <div className="flex justify-between">
         <button

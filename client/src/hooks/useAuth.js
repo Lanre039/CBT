@@ -5,8 +5,6 @@ export const useAuth = (tokenType) => {
     (state) => state.roles
   );
 
-  // console.log(currentLoggedInUserRoleId, roles);
-
   const isAuthenticatedUser = (targetRole) => {
     const loggedInUserRole = roles.find((role) => {
       return role._id === currentLoggedInUserRoleId;
