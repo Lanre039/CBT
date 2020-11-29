@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useToken } from '../../api/useToken';
+import Course from './Course';
 import ModalPage from './Modal';
 
 const CoursesPage = () => {
   const [displayModal, setDisplayModal] = useState(false);
   const [fetchedData, setFetchedData] = useState(null);
   const [formData, setFormData] = useState({});
+
   const examPortal = useToken();
-  let history = useHistory();
   useEffect(() => {
     async function saveData() {
       try {
@@ -47,24 +48,9 @@ const CoursesPage = () => {
   const renderData = () => {
     return (
       <div className="flex flex-wrap m-20 mb-0 py-10 px-1">
-        {fetchedData.map(({ _id, code, title, questions }, index) => {
-          return (
-            <div
-              className="w-1/3 mb-10 hover:bg-purple-200 p-4 rounded cursor-pointer"
-              key={index}
-              onClick={() => history.push(`/create-questions/${_id}`)}
-            >
-              <h1 className="font-semibold text-purple-800 text-2xl">
-                {code.toUpperCase()}
-              </h1>
-              <h2 className="text-sm">{title}</h2>
-              <p className="text-sm">
-                Number of questions - &nbsp;
-                {questions.length === 0 ? 'Nil' : questions.length}
-              </p>
-            </div>
-          );
-        })}
+        {fetchedData.map((data, index) => (
+          <Course data={data} index={index} key={index} />
+        ))}
       </div>
     );
   };

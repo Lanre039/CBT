@@ -54,7 +54,7 @@ const App = () => {
         dispatch({
           type: types.SET_TOKEN,
           payload: {
-            type: 'cbt_user_token',
+            type: 'cbt_admin_token',
             token: token,
           },
         });

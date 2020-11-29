@@ -24,7 +24,9 @@ const Exam = () => {
     else {
       (async function getQuestions() {
         try {
-          const response = await examPortal.get(`/questions?id=${courseId}`);
+          const response = await examPortal.post(`/questions`, {
+            id: courseId,
+          });
           const { status } = response;
           if (status === 200) {
             const { questions } = response.data;
