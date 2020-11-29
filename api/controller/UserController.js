@@ -57,4 +57,16 @@ module.exports = {
       return res.status(404).send({ err: "Result NOT found" });
     }
   },
+  fetchUserRegisteredCourses: async (req, res, next) => {
+    const { _id } = req.user;
+    try {
+      const user = await UserService.findUserParams({ _id });
+      if (!user) {
+        return res.status(404).send({ err: "User NOT found" });
+      }
+
+      const userCourses = await UserService.fetchUserCourses(user);
+      return res.status(200).send({ userCourses });
+    } catch (error) {}
+  },
 };

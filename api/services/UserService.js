@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Result = require("../models/Result");
-const Course = require("../models/Course");
 const { calculateScore } = require("../utils/calculateScore");
+const CourseService = require("../services/CourseService");
 
 module.exports = {
   doesPasswordMatch: async function (userPassword, passwordFromDb) {
@@ -71,5 +71,14 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
+  },
+  fetchUserCourses: async function (user) {
+    let allCourses = [];
+    const { courses } = user;
+    for (const courseId of courses) {
+      const course = await CourseService.getCourseById(courseId);
+      allCourses = [...allCourses, course];
+    }
+    return allCourses;
   },
 };

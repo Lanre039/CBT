@@ -24,7 +24,7 @@ module.exports = {
     }
   },
   getRandomQuestionsInBatches: async (req, res, next) => {
-    const { id } = req.query;
+    const { id } = req.body;
     try {
       const questions = await QuestionService.getRandomQuestions(id);
 

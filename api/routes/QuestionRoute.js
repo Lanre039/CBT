@@ -7,6 +7,6 @@ const {
 const auth = require("../middleware/auth");
 
 router.post("/api/create-question", auth, createQuestion);
-router.get("/api/questions", auth, getRandomQuestionsInBatches);
+router.post("/api/questions", auth, getRandomQuestionsInBatches);
 
 module.exports = router;
