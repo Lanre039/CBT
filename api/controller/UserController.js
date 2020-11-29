@@ -45,7 +45,7 @@ module.exports = {
   },
   fetchUserResult: async (req, res, next) => {
     const { _id } = req.user;
-    const { courseId } = req.params;
+    const { courseId } = req.body;
     try {
       const result = await UserService.fetchUserResultByCourseId(_id, courseId);
       if (!result) {

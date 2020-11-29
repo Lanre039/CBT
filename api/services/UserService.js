@@ -77,7 +77,9 @@ module.exports = {
     const { courses } = user;
     for (const courseId of courses) {
       const course = await CourseService.getCourseById(courseId);
-      allCourses = [...allCourses, course];
+      if (course) {
+        allCourses = [...allCourses, course];
+      }
     }
     return allCourses;
   },

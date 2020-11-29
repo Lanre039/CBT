@@ -10,9 +10,9 @@ module.exports = {
       return null;
     }
   },
-  getAllCourses: async function () {
+  getAllCourses: async function (owner) {
     try {
-      const courseFromDb = await Course.find({});
+      const courseFromDb = await Course.find({ owner });
       return courseFromDb;
     } catch (err) {
       console.log(err);
@@ -21,8 +21,18 @@ module.exports = {
   },
   getCourseById: async function (id) {
     try {
-      const courseFromDb = await Course.findOne({ _id: id });
+      const courseFromDb = await Course.findOne({ _id: id, isAvailable: true });
       return courseFromDb;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  },
+  changeCourseStatus: async function (id) {
+    try {
+      const courseFromDb = await Course.findOne({ _id: id });
+      courseFromDb.isAvailable = !courseFromDb.isAvailable;
+      return await courseFromDb.save();
     } catch (err) {
       console.log(err);
       return null;
