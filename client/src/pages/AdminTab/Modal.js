@@ -1,23 +1,26 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
+import React, { useState } from 'react';
+import Modal from 'react-modal';
 
 const customStyles = {
+  overlay: {
+    backgroundColor: '#1e1414bf',
+  },
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#fff",
-    padding: "1rem 1.5rem",
-    width: "40%",
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: '#fff',
+    padding: '1rem 1.5rem',
+    width: '40%',
   },
 };
 
 function ModalPage({ modalIsOpen, setIsOpen, setFormData }) {
-  const [courseCode, setCourseCode] = useState("");
-  const [courseTitle, setCourseTitle] = useState("");
+  const [courseCode, setCourseCode] = useState('');
+  const [courseTitle, setCourseTitle] = useState('');
 
   function closeModal() {
     setIsOpen(false);
@@ -31,8 +34,8 @@ function ModalPage({ modalIsOpen, setIsOpen, setFormData }) {
       title: courseTitle,
     };
     setFormData(dataToBeSent);
-    setCourseCode("");
-    setCourseTitle("");
+    setCourseCode('');
+    setCourseTitle('');
 
     closeModal();
   }
@@ -44,13 +47,16 @@ function ModalPage({ modalIsOpen, setIsOpen, setFormData }) {
         // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        ariaHideApp={false}
+        // ariaHideApp={false}
         contentLabel="Example Modal"
       >
         <div className="flex justify-between items-center border-b-2 pb-3 text-black">
           <h1 className="font-medium text-lg">Create Course</h1>
-          <div className="bg-red-200 py-2 px-5 rounded">
-            <button onClick={closeModal} className="text-red-600">
+          <div className="">
+            <button
+              onClick={closeModal}
+              className="text-red-600 bg-red-200 py-2 px-5 rounded"
+            >
               Close
             </button>
           </div>

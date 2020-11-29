@@ -1,36 +1,39 @@
-import React, { useState } from "react";
-
-const courses = [
-  { title: "Organic Chemistry" },
-  { title: "Electrical Electronics" },
-  { title: "Inorganic Chemistry" },
-  { title: "Chemistry of Water" },
-  { title: "Statistics and Applied Mathematics" },
-  { title: "Engineering Mathematics" },
-  { title: "Use of English" },
-  { title: "Electromagnetism" },
-  { title: "African Literature" },
-];
-
-const Course = ({ title }) => {
-  const [selectionState, setSelectionState] = useState(false);
-
-  return (
-    <li className="w-1/2 flex items-center my-4 text-base">
-      <span
-        className={`material-icons shadow text-gray-200 cursor-pointer ${
-          selectionState ? "text-green-800" : ""
-        }`}
-        onClick={() => setSelectionState(!selectionState)}
-      >
-        {selectionState ? "check_box" : "check_box_outline_blank"}
-      </span>
-      <span className="ml-4">{title}</span>
-    </li>
-  );
-};
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useToken } from '../../api/useToken';
+import Course from './Course';
+import CourseCreationModal from './CourseCreationModal';
 
 export const CourseSelection = () => {
+  const [courses, setCourses] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const { selectedCourses } = useSelector((state) => state.courseSelection);
+  const examPortal = useToken();
+
+  useEffect(() => {
+    // console.log(sessionStorage.getItem('cbt_user_token'));
+    (async function getCourses() {
+      const response = await examPortal.get('/courses');
+      setCourses(response.data.courses);
+    })();
+  }, []);
+
+  const handleCourseSubmission = async () => {
+    console.log(sessionStorage.getItem('cbt_user_token'));
+    try {
+      const response = await examPortal.post('/user/register-courses', {
+        courseIds: selectedCourses,
+      });
+      console.log(response);
+
+      const { status } = response;
+
+      if (status === 200) {
+        setOpenModal(true);
+      }
+    } catch (error) {}
+  };
+
   return (
     <div className="">
       <div className="w-screen h-screen flex flex-col items-center bg-purple-800 p-4">
@@ -40,18 +43,28 @@ export const CourseSelection = () => {
 
         <div className="p-4 bg-white my-10 rounded-sm w-2/3">
           <ul className="w-full flex flex-wrap">
-            {courses.map((course) => (
-              <Course title={course.title} />
+            {courses.map((course, idx) => (
+              <Course key={idx} title={course.title} courseId={course._id} />
             ))}
           </ul>
           <div className="flex justify-center">
-            <button className="px-8 py-2 bg-white text-green-800 shadow-xl border rounded border-green-900 font-black hover:bg-green-800 hover:text-white mx-auto">
-              Submit
-            </button>
+            {courses.length > 0 ? (
+              <button
+                className="px-8 py-2 bg-white text-green-800 shadow-xl border rounded border-green-900 font-black hover:bg-green-800 hover:text-white mx-auto"
+                onClick={handleCourseSubmission}
+              >
+                Submit
+              </button>
+            ) : (
+              <span>There's currently no exam available</span>
+            )}
           </div>
         </div>
+
+        {openModal && (
+          <CourseCreationModal setIsOpen={setOpenModal} isOpen={openModal} />
+        )}
       </div>
     </div>
   );
 };
-

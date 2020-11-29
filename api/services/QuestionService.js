@@ -29,21 +29,8 @@ module.exports = {
     }
   },
   getRandomQuestions: async function (courseId) {
-    const limit = 2;
     try {
-      const totalQuestions = await Question.find({ courseId }).countDocuments();
-      const randomNumber = Math.ceil(
-        Math.random() * (totalQuestions - limit) + 1
-      );
-      const rand =
-        randomNumber > totalQuestions - limit
-          ? randomNumber - limit
-          : randomNumber;
-
-      const questions = await Question.find({ courseId })
-        .select("-answer")
-        .limit(limit)
-        .skip(rand);
+      const questions = await Question.find({ courseId }).select("-answer");
       return questions;
     } catch (err) {
       console.log(err);

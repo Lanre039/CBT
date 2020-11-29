@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { examPortal } from "./api";
-import "./App.css";
-import { useAuth } from "./hooks";
-import { types } from "./redux/types";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useToken } from './api/useToken';
+import './App.css';
+import { useAuth } from './hooks';
+import { types } from './redux/types';
 const App = () => {
   const [loginError, setLoginError] = useState(false);
   const { username, password } = useSelector((state) => state.login);
@@ -13,6 +13,7 @@ const App = () => {
   // const authenticatedAsUser = useAuth();
 
   const { roles } = useSelector((state) => state.roles);
+  const examPortal = useToken();
 
   useEffect(() => {
     const clearSessionStorage = () => {
@@ -25,38 +26,42 @@ const App = () => {
     e.preventDefault();
 
     try {
-      const response = await examPortal.post("/login", {
+      const response = await examPortal.post('/login', {
         userName: username,
         password,
       });
 
       const { token } = response.data;
       const { roleId } = response.data.user;
+      const userHasRegistered = response.data.user.courses.length > 0;
+      // console.log(response);
 
       const checkRoleId = () => roles.find((role) => role._id === roleId);
 
       const userRole = checkRoleId().code;
 
-      if (userRole === "normal_user") {
-        sessionStorage.setItem("cbt_user_token", token);
-        history.push("/select");
-      } else if (userRole === "admin_user") {
-        sessionStorage.setItem("cbt_admin_token", token);
-        history.push("/admin");
+      if (userRole === 'normal_user') {
+        dispatch({
+          type: types.SET_TOKEN,
+          payload: {
+            type: 'cbt_user_token',
+            token: token,
+          },
+        });
+        if (userHasRegistered) history.push('/take-exam');
+        else history.push('/select');
+      } else if (userRole === 'admin_user') {
+        dispatch({
+          type: types.SET_TOKEN,
+          payload: {
+            type: 'cbt_user_token',
+            token: token,
+          },
+        });
+        history.push('/admin');
       } else {
-        throw new Error("An error occured");
+        throw new Error('An error occured');
       }
-
-      // dispatch({
-      //   type: types.SET_ROLE_ID,
-      //   payload: roleId,
-      // });
-
-      // if() {
-      //   history.push("/select");
-      // } else {
-      //   history.push("/admin");
-      // }
     } catch (error) {
       setLoginError(true);
     }
@@ -75,7 +80,7 @@ const App = () => {
   };
 
   const inputClass = `appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-none
-  ${loginError ? "border-red-600" : " border-gray-300"}
+  ${loginError ? 'border-red-600' : ' border-gray-300'}
 `;
 
   return (
@@ -92,7 +97,7 @@ const App = () => {
         <div className="w-1/2 max-w-sm">
           {loginError && (
             <div className=" bg-red-100 text-red-800 font-semibold shadow-md rounded px-8 py-2 my-4">
-              {"Error occured, check your credentials"}
+              {'Error occured, check your credentials'}
             </div>
           )}
           <form
