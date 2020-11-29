@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   getRandomQuestions: async function (courseId) {
-    const limit = 1;
+    const limit = 2;
     try {
       const totalQuestions = await Question.find({ courseId }).countDocuments();
       const randomNumber = Math.ceil(
@@ -42,7 +42,7 @@ module.exports = {
 
       const questions = await Question.find({ courseId })
         .select("-answer")
-        .limit(1)
+        .limit(limit)
         .skip(rand);
       return questions;
     } catch (err) {
