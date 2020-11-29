@@ -5,14 +5,6 @@ module.exports = {
   createQuestion: async (req, res, next) => {
     const { roleId } = req.user;
     const { courseId, data } = req.body;
-    // console.log(data);
-    // if (!courseId || !question || !answer) {
-    //   return res.status(400).send({ err: "One or more fields are empty" });
-    // }
-
-    // if (options.length < 2) {
-    //   return res.status(400).send({ err: "One or more fields are empty" });
-    // }
 
     try {
       const { code } = await RoleService.getRoleById(roleId);

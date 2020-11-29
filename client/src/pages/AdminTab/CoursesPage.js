@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { examPortal } from '../../api';
+import { useToken } from '../../api/useToken';
 import ModalPage from './Modal';
 
 const CoursesPage = () => {
   const [displayModal, setDisplayModal] = useState(false);
   const [fetchedData, setFetchedData] = useState(null);
   const [formData, setFormData] = useState({});
+  const examPortal = useToken();
   let history = useHistory();
   useEffect(() => {
     async function saveData() {
@@ -59,7 +60,7 @@ const CoursesPage = () => {
               <h2 className="text-sm">{title}</h2>
               <p className="text-sm">
                 Number of questions - &nbsp;
-                {questions.length === 0 ? 'Nill' : questions.length}
+                {questions.length === 0 ? 'Nil' : questions.length}
               </p>
             </div>
           );
