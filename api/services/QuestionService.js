@@ -28,7 +28,7 @@ module.exports = {
       return null;
     }
   },
-  getRandomQuestions: async function (courseId) {
+  getQuestions: async function (courseId) {
     try {
       const questions = await Question.find({ courseId }).select("-answer");
       return questions;
