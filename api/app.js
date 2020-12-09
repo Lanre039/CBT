@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const helmet = require("helmet");
+
 const { seedDatabaseWithRoles } = require("./seeders/roleSeeder");
 const { seedDatabaseWithUsers } = require("./seeders/userSeeder");
 const AuthRoute = require("./routes/AuthRoute");
@@ -14,6 +16,8 @@ const loggerInstance = new Logger("app");
 
 const app = express();
 app.use(express.json());
+
+app.use(helmet);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
