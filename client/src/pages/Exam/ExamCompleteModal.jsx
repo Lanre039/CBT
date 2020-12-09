@@ -1,16 +1,16 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import ExamModal from "./ExamModal";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import ExamModal from './ExamModal';
 
 const ExamCompleteModal = ({ setIsOpen, isOpen }) => {
-  const history = useHistory()
+  const history = useHistory();
   return (
     <ExamModal modalIsOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="flex justify-center flex-col">
         <div className="flex justify-center mb-4">
           <span
             className="material-icons text-green-700"
-            style={{ fontSize: "8rem", textShadow: "2px 2px 2px #1e1414bf" }}
+            style={{ fontSize: '8rem', textShadow: '2px 2px 2px #1e1414bf' }}
           >
             verified
           </span>
