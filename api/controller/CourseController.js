@@ -43,8 +43,8 @@ module.exports = {
   getAllCourses: async (req, res, next) => {
     const { roleId, userName } = req.user;
     try {
-
-      if (code !== "admin_user") {
+      const { code } = await RoleService.getRoleById(roleId);
+      if (code !== "admin_user" && code !== "normal_user") {
         loggerInstance.error(
           `Unathorized to perform this action. User: ${userName}, Role: User`
         );
@@ -53,10 +53,10 @@ module.exports = {
           .send({ err: "Unathorized to perform this action" });
       }
 
+      const courses = await CourseService.getAllCourses(roleId);
       loggerInstance.info(
         `Successfully fetched all courses User: ${userName}, Role: User/Admin`
       );
-      const courses = await CourseService.getAllCourses(roleId);
       return res.status(200).send({ courses });
     } catch (err) {
       loggerInstance.error("A server error occurred while fetching courses.");

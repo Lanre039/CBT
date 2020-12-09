@@ -3,8 +3,6 @@ const Question = require("../models/Question");
 module.exports = {
   calculateScore: async (optionsDetails) => {
     let count = 0;
-    // const courseId = optionsDetails[0].courseId;
-    console.log("OPTIONS DETAILS:::::", optionsDetails);
     try {
       for (const data of optionsDetails) {
         const { answer } = await Question.findOne({ _id: data._id }).select(
