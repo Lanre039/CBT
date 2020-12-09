@@ -1,4 +1,5 @@
 const Question = require("../models/Question");
+const Course = require("../models/Course");
 
 module.exports = {
   processFormData: async function (courseId, data) {
@@ -20,7 +21,11 @@ module.exports = {
     try {
       let savedData = [];
       for (const item of data) {
-        savedData = [...savedData, await new Question({ ...item }).save()];
+        const course = await Course.findById(item.courseId);
+        const question = await new Question({ ...item }).save();
+        course.questions = [...course.questions, question._id];
+        await course.save();
+        savedData = [...savedData, question];
       }
       return await savedData;
     } catch (err) {
@@ -28,7 +33,7 @@ module.exports = {
       return null;
     }
   },
-  getRandomQuestions: async function (courseId) {
+  getQuestions: async function (courseId) {
     try {
       const questions = await Question.find({ courseId }).select("-answer");
       return questions;

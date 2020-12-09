@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import ExamModal from "./ExamModal";
 
 const ExamCompleteModal = ({ setIsOpen, isOpen }) => {
+  const history = useHistory()
   return (
     <ExamModal modalIsOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="flex justify-center flex-col">
@@ -20,7 +22,7 @@ const ExamCompleteModal = ({ setIsOpen, isOpen }) => {
           </button>
           <button
             className="border px-8 py-2 rounded border-green-500 text-green-800 font-semibold mx-4 bg-green-100 hover:bg-green-300"
-            onClick={() => setIsOpen(false)}
+            onClick={() => history.push('/take-exam')}
           >
             End
           </button>

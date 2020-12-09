@@ -14,10 +14,19 @@ const Exam = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
-  const { courseId } = useSelector((state) => state.exam);
+  const { courseId, time } = useSelector((state) => state.exam);
   const { questions } = useSelector((state) => state.examQuestions);
 
   const examPortal = useToken();
+
+  useEffect(() => {
+    dispatch({
+      type: types.SET_TIMER,
+      payload: Date.now() + 1 * 60 * 1000,
+    });
+  }, [dispatch]);
+
+ 
 
   useEffect(() => {
     if (!courseId) history.push('/take-exam');
@@ -45,26 +54,24 @@ const Exam = () => {
     }
   }, []);
 
-  console.log(questions);
+  // console.log(questions);
 
   return (
     <div className="bg-purple-800 h-screen">
-      {questions.length > 0 && (
-        <>
-          <ExamNavbar />
-          <main className="flex px-24 py-8">
-            <section className="question w-2/3 border p-4 mr-16 bg-white rounded-lg">
-              <ExamQuestion />
-              <ExamOptions />
-              <ExamControls />
-            </section>
-            <section className="list w-1/3 p-4 flex flex-col">
-              <ExamSkipper length={questions.length} />
-              <ExamTimer />
-            </section>
-          </main>
-        </>
-      )}
+      <ExamNavbar />
+      <main className="flex px-24 py-8">
+        {/* {questions.length > 0 && ( */}
+        <section className="question w-2/3 border p-4 mr-16 bg-white rounded-lg shadow-xl">
+          <ExamQuestion />
+          <ExamOptions />
+          <ExamControls />
+        </section>
+        {/* )} */}
+        <section className="list w-1/3 p-4 flex flex-col">
+          <ExamSkipper length={questions.length} />
+          { time && <ExamTimer />}
+        </section>
+      </main>
     </div>
   );
 };

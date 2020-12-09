@@ -2,15 +2,21 @@ import { types } from '../types';
 
 const initialState = {
   courseId: '',
-  questions: []
+  courseTitle: '',
+  questions: [],
+  time: null,
 };
 
 export const examReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_EXAM:
-      return { ...state, courseId: action.payload };
-    case "SET_QUESTIOMS":
-      return {...state, questions: action.payload}
+      return {
+        ...state,
+        courseId: action.payload.id,
+        courseTitle: action.payload.title,
+      };
+    case types.SET_TIMER:
+      return { ...state, time: action.payload };
     default:
       return { ...state };
   }

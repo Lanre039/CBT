@@ -22,6 +22,8 @@ export const questionsReducer = (state = initialState, action) => {
       } else {
         return { ...state };
       }
+    case types.SKIP_TO_QUESTION:
+      return { ...state, currentIndex: action.payload };
     default:
       return { ...state };
   }

@@ -9,6 +9,8 @@ const CourseRoute = require("./routes/CourseRoute");
 const QuestionRoute = require("./routes/QuestionRoute");
 const UserRoute = require("./routes/UserRoute");
 const RoleRoute = require("./routes/RoleRoute");
+const Logger = require("./services/logger/loggerService");
+const loggerInstance = new Logger("app");
 
 const app = express();
 app.use(express.json());
@@ -53,13 +55,18 @@ app.listen(PORT, () => {
     },
     (err, success) => {
       console.log(`Server listening on port ${PORT}`);
+      loggerInstance.info(`Server listening on port ${PORT}`);
       if (err) {
         console.log("An error occurred while connecting to the database");
+        loggerInstance.info(
+          "An error occurred while connecting to the database"
+        );
         return;
       }
       // seedDatabaseWithRoles();
       // seedDatabaseWithUsers();
       console.log("Successfully connected to the database");
+      loggerInstance.info("Successfully connected to the database");
     }
   );
 });

@@ -1,12 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { types } from '../../redux/types';
 
 const SkipperCircle = ({ index }) => {
   const { answeredQuestions } = useSelector((state) => state.answers);
   const { currentIndex } = useSelector((state) => state.examQuestions);
+  const dispatch = useDispatch();
 
   const hasBeenAnswered = () => {
     return answeredQuestions && answeredQuestions.indexOf(index) !== -1;
+  };
+
+  const skipToQuestion = () => {
+    dispatch({
+      type: types.SKIP_TO_QUESTION,
+      payload: index,
+    });
   };
 
   return (
@@ -19,6 +28,7 @@ const SkipperCircle = ({ index }) => {
             ? 'bg-purple-800 text-white'
             : 'bg-purple-300  text-purple-900'
         }`}
+        onClick={skipToQuestion}
       >
         {index + 1}
       </span>

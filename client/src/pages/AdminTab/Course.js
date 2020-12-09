@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useToken } from '../../api/useToken';
 
-const Course = ({ data, index }) => {
+const Course = ({ data, index, setReloadS }) => {
   const [publishIconVisible, setPublishIconVisible] = useState(false);
   const { _id, code, title, questions, isAvailable } = data;
+  console.log(data);
 
   const history = useHistory();
-  const handlePublishExam = (e) => {
+  const examPortal = useToken();
+
+  const handlePublishExam = async (e) => {
     e.stopPropagation();
+
+    try {
+      const response = await examPortal.post('/course/status', {
+        id: _id,
+      });
+      window.location.reload();
+    } catch (error) {}
   };
   return (
     <div className="w-1/3 mb-10 p-2 flex-grow" key={index}>
@@ -22,7 +33,7 @@ const Course = ({ data, index }) => {
           {publishIconVisible && (
             <i
               className={`material-icons ${
-                isAvailable ? 'hover:text-red-700' : 'hover:text-blue-700'
+                isAvailable ? 'hover:text-red-700' : 'hover:text-green-700'
               }`}
               title={isAvailable ? 'unpublish this exam' : 'publish exam'}
               onClick={handlePublishExam}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useToken } from '../../api/useToken';
 import Course from './Course';
 import ModalPage from './Modal';
@@ -8,6 +7,7 @@ const CoursesPage = () => {
   const [displayModal, setDisplayModal] = useState(false);
   const [fetchedData, setFetchedData] = useState(null);
   const [formData, setFormData] = useState({});
+  const [reloadState, setReloadState] = useState(false);
 
   const examPortal = useToken();
   useEffect(() => {
@@ -45,11 +45,17 @@ const CoursesPage = () => {
     }
   }, [fetchedData, formData]);
 
+  console.log(fetchedData);
   const renderData = () => {
     return (
       <div className="flex flex-wrap m-20 mb-0 py-10 px-1">
         {fetchedData.map((data, index) => (
-          <Course data={data} index={index} key={index} />
+          <Course
+            data={data}
+            index={index}
+            key={index}
+            setReloadState={setReloadState}
+          />
         ))}
       </div>
     );

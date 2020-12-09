@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const RoleService = require("./RoleService");
 
 module.exports = {
   createCourse: async function (data) {
@@ -12,8 +13,13 @@ module.exports = {
   },
   getAllCourses: async function (owner) {
     try {
-      const courseFromDb = await Course.find({ owner });
-      return courseFromDb;
+      const { code } = await RoleService.getRoleById(owner);
+
+      if (code === "admin_user") {
+        return await Course.find({ owner });
+      } else {
+        return await Course.find({});
+      }
     } catch (err) {
       console.log(err);
       return null;
