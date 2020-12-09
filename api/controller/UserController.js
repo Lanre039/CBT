@@ -72,7 +72,7 @@ module.exports = {
     }
   },
   fetchUserRegisteredCourses: async (req, res, next) => {
-    const { _id } = req.user;
+    const { _id, userName } = req.user;
     try {
       const user = await UserService.findUserParams({ _id });
       if (!user) {
