@@ -59,6 +59,8 @@ const ExamOptions = () => {
   const { questions, currentIndex } = useSelector(
     (state) => state.examQuestions
   );
+
+  if (!questions[currentIndex]) return null;
   const { options, _id: id } = questions[currentIndex];
 
   return (

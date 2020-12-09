@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useToken } from './api/useToken';
 import './App.css';
-import { useAuth } from './hooks';
+// import { useAuth } from './hooks';
 import { types } from './redux/types';
 const App = () => {
   const [loginError, setLoginError] = useState(false);
@@ -32,9 +32,9 @@ const App = () => {
       });
 
       const { token } = response.data;
-      const { roleId } = response.data.user;
+      const { roleId, firstName, lastName } = response.data.user;
+      sessionStorage.setItem('name_of_user', `${firstName} ${lastName}`);
       const userHasRegistered = response.data.user.courses.length > 0;
-      // console.log(response);
 
       const checkRoleId = () => roles.find((role) => role._id === roleId);
 
@@ -54,7 +54,7 @@ const App = () => {
         dispatch({
           type: types.SET_TOKEN,
           payload: {
-            type: 'cbt_user_token',
+            type: 'cbt_admin_token',
             token: token,
           },
         });

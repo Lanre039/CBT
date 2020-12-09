@@ -7,10 +7,14 @@ const ExamQuestion = ({ question }) => {
   );
   return (
     <section className="question flex mb-6">
-      <h2 className="font-bold text-3xl mr-8">{currentIndex + 1}.</h2>
-      <article className="font-medium text-gray-800">
-        {questions[currentIndex].question}
-      </article>
+      {questions.length > 0 && (
+        <>
+          <h2 className="font-bold text-3xl mr-8">{currentIndex + 1}.</h2>
+          <article className="font-medium text-gray-800">
+            {questions[currentIndex].question}
+          </article>
+        </>
+      )}
     </section>
   );
 };

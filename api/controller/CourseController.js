@@ -43,7 +43,6 @@ module.exports = {
   getAllCourses: async (req, res, next) => {
     const { roleId, userName } = req.user;
     try {
-      const { code } = await RoleService.getRoleById(roleId);
 
       if (code !== "admin_user") {
         loggerInstance.error(
@@ -65,11 +64,14 @@ module.exports = {
     }
   },
   getCourseById: async (req, res, next) => {
+    const { userName } = req.user;
     const id = req.params.id;
 
     try {
       const courses = await CourseService.getCourseById(id);
-      loggerInstance.info(`Successfully fetched all courses. Role: User/Admin`);
+      loggerInstance.info(
+        `Successfully fetched all courses User: ${userName}, Role: User/Admin`
+      );
       return res.status(200).send(courses);
     } catch (err) {
       loggerInstance.error("A server error occurred while fetching a course");

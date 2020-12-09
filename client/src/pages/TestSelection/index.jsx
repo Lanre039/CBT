@@ -8,10 +8,11 @@ export const TestSelection = () => {
   const examPortal = useToken();
   useEffect(() => {
     (async function getRegisteredCourse() {
-      const response = await examPortal.get('/courses');
+      const response = await examPortal.get('/user/courses');
+      // console.log(response);
       const { status } = response;
       if (status === 200) {
-        const { courses } = response.data;
+        const { userCourses: courses } = response.data;
         // console.log(courses);
         setRegisteredCourses(courses);
       }

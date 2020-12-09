@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Result = require("../models/Result");
 const { calculateScore } = require("../utils/calculateScore");
 const CourseService = require("../services/CourseService");
+const Question = require("../models/Question");
 
 module.exports = {
   doesPasswordMatch: async function (userPassword, passwordFromDb) {
@@ -42,13 +43,18 @@ module.exports = {
     result.courseId = data[0].courseId;
 
     try {
+      const totalQuestions = await Question.find({
+        courseId: result.courseId,
+      }).countDocuments();
+
       const user = await Result.findOne({ userId, courseId: result.courseId });
       if (user) {
         return null;
       }
 
       const { score } = await calculateScore(data);
-      result.score = score;
+      const calcScore =  (score / totalQuestions) * 100
+      result.score = calcScore.toFixed(2);
 
       const savedResult = await new Result(result).save();
       return savedResult;

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import CoursesPage from "./CoursesPage";
-import StudentsPage from "./StudentsPage";
+import React, { useState } from 'react';
+import CoursesPage from './CoursesPage';
+import StudentsPage from './StudentsPage';
 
 function AdminTab(props) {
-  const [currentTab, setCurrentTab] = useState("courses");
+  const [currentTab, setCurrentTab] = useState('courses');
 
   const renderActualPage = () => {
     switch (currentTab) {
-      case "courses":
+      case 'courses':
         return <CoursesPage />;
-      case "students":
+      case 'students':
       default:
         return <StudentsPage />;
     }
@@ -22,23 +22,25 @@ function AdminTab(props) {
         <div className="flex justify-center">
           <h1
             className={`px-20 py-3 font-bold cursor-pointer border-b-2 ${
-              currentTab === "courses" ? "bg-gray-100" : "bg-white"
+              currentTab === 'courses' ? 'bg-gray-100' : 'bg-white'
             }`}
-            onClick={() => setCurrentTab("courses")}
+            onClick={() => setCurrentTab('courses')}
           >
             Courses
           </h1>
           <h1
             className={`px-20 py-3 font-bold cursor-pointer border-b-2 ${
-              currentTab === "students" ? "bg-gray-100" : "bg-white"
+              currentTab === 'students' ? 'bg-gray-100' : 'bg-white'
             }`}
-            onClick={() => setCurrentTab("students")}
+            onClick={() => setCurrentTab('students')}
           >
             Students
           </h1>
         </div>
       </div>
-      <div className="mx-40 mt-20 ">{renderActualPage()}</div>
+      <div className="mx-10 sm:mx-4 md:mx-20 lg:mx-40 mt-20 ">
+        {renderActualPage()}
+      </div>
     </div>
   );
 }
