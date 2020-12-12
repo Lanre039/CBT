@@ -11,9 +11,9 @@ module.exports = {
       return null;
     }
   },
-  getAllCourses: async function (owner) {
+  getAllCourses: async function (owner, roleId) {
     try {
-      const { code } = await RoleService.getRoleById(owner);
+      const { code } = await RoleService.getRoleById(roleId);
 
       if (code === "admin_user") {
         return await Course.find({ owner });

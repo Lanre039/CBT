@@ -53,7 +53,7 @@ module.exports = {
       }
 
       const { score } = await calculateScore(data);
-      const calcScore =  (score / totalQuestions) * 100
+      const calcScore = (score / totalQuestions) * 100;
       result.score = calcScore.toFixed(2);
 
       const savedResult = await new Result(result).save();
@@ -88,5 +88,16 @@ module.exports = {
       }
     }
     return allCourses;
+  },
+  fetchStudentsByCoursesOffered: async function (adminId, roleId) {
+    try {
+      const courses = await CourseService.getAllCourses(adminId, roleId);
+      const courseIds = courses.map(({ _id }) => _id);
+      const users = await User.find({ courses: { $in: courseIds } });
+      return users;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   },
 };

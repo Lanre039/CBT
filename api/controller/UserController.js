@@ -1,5 +1,6 @@
 const UserService = require("../services/UserService");
 const Logger = require("../services/logger/loggerService");
+const RoleService = require("../services/RoleService");
 const loggerInstance = new Logger("user");
 
 module.exports = {
@@ -83,9 +84,35 @@ module.exports = {
       const userCourses = await UserService.fetchUserCourses(user);
 
       loggerInstance.info(
-        `Successully fetched user regitered courses. User: ${userName}, Role: User`
+        `Successully fetched user registered courses. User: ${userName}, Role: User`
       );
       return res.status(200).send({ userCourses });
+    } catch (error) {
+      loggerInstance.error(error);
+      return res.status(404).send({ err: error });
+    }
+  },
+  fetchAdminStudents: async function (req, res, next) {
+    const { _id, roleId, userName } = req.user;
+    try {
+      const { code } = await RoleService.getRoleById(roleId);
+      if (code !== "admin_user") {
+        loggerInstance.error(
+          `Unathorized to perform this action. User: ${userName}, Role: User`
+        );
+        return res
+          .status(401)
+          .send({ err: "Unathorized to perform this action" });
+      }
+
+      const users = await UserService.fetchStudentsByCoursesOffered(
+        _id,
+        roleId
+      );
+      loggerInstance.info(
+        `Successully fetched users. User: ${userName}, Role: Admin`
+      );
+      return res.status(200).send({ users });
     } catch (error) {
       loggerInstance.error(error);
       return res.status(404).send({ err: error });
