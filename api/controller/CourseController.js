@@ -5,7 +5,7 @@ const loggerInstance = new Logger("course");
 
 module.exports = {
   createCourse: async (req, res, next) => {
-    const { roleId, userName } = req.user;
+    const { _id, roleId, userName } = req.user;
     const { code: courseCode, title } = req.body;
 
     if (!courseCode || !title) {
@@ -28,7 +28,7 @@ module.exports = {
       const createCourse = await CourseService.createCourse({
         code: courseCode.trim(),
         title: title.trim(),
-        owner: roleId,
+        owner: _id,
       });
 
       loggerInstance.info(
@@ -41,7 +41,7 @@ module.exports = {
     }
   },
   getAllCourses: async (req, res, next) => {
-    const { roleId, userName } = req.user;
+    const { _id, roleId, userName } = req.user;
     try {
       const { code } = await RoleService.getRoleById(roleId);
       if (code !== "admin_user" && code !== "normal_user") {
@@ -53,7 +53,7 @@ module.exports = {
           .send({ err: "Unathorized to perform this action" });
       }
 
-      const courses = await CourseService.getAllCourses(roleId);
+      const courses = await CourseService.getAllCourses(_id, roleId);
       loggerInstance.info(
         `Successfully fetched all courses User: ${userName}, Role: User/Admin`
       );
