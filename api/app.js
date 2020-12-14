@@ -17,7 +17,7 @@ const loggerInstance = new Logger("app");
 const app = express();
 app.use(express.json());
 
-app.use(helmet);
+app.use(helmet());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
