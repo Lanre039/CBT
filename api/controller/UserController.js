@@ -105,14 +105,19 @@ module.exports = {
           .send({ err: "Unathorized to perform this action" });
       }
 
-      const users = await UserService.fetchStudentsByCoursesOffered(
+      const allStudentsData = await UserService.fetchStudentsByCoursesOffered(
         _id,
         roleId
       );
+
+      const addResultToData = await UserService.addResultToData(
+        allStudentsData
+      );
+
       loggerInstance.info(
         `Successully fetched users. User: ${userName}, Role: Admin`
       );
-      return res.status(200).send({ users });
+      return res.status(200).send({ users: addResultToData });
     } catch (error) {
       loggerInstance.error(error);
       return res.status(404).send({ err: error });
