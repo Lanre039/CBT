@@ -93,7 +93,45 @@ module.exports = {
     try {
       const courses = await CourseService.getAllCourses(adminId, roleId);
       const courseIds = courses.map(({ _id }) => _id);
-      const users = await User.find({ courses: { $in: courseIds } });
+      const users = await User.find({ courses: { $in: courseIds } }).select(
+        "-password"
+      );
+      return { users, courseIds };
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  },
+  addResultToData: async function (data) {
+    const { users, courseIds } = data;
+    try {
+      if (users.length) {
+        let data = [];
+
+        // find all results with admin courseIds
+        const allResults = await Result.find({
+          courseId: { $in: courseIds },
+        }).populate("courseId");
+
+        for (const user of users) {
+          // filter filter current user result
+          const results = allResults.filter(
+            ({ userId }) => userId.toString() === user._id.toString()
+          );
+
+          // format result
+          const formatResult = results.map(({ userId, courseId, score }) => ({
+            userId,
+            code: courseId.code,
+            title: courseId.title,
+            score,
+          }));
+
+          data = [...data, { ...user._doc, results: formatResult }];
+        }
+        return data;
+      }
+
       return users;
     } catch (error) {
       console.log(error);
