@@ -48,7 +48,7 @@ const CoursesPage = () => {
   console.log(fetchedData);
   const renderData = () => {
     return (
-      <div className="flex flex-wrap m-20 mb-0 py-10 px-1">
+      <div className="flex flex-wrap mx-20 mb-0 py-10 px-1">
         {fetchedData.map((data, index) => (
           <Course
             data={data}

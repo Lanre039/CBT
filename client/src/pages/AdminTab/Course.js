@@ -5,7 +5,7 @@ import { useToken } from '../../api/useToken';
 const Course = ({ data, index, setReloadS }) => {
   const [publishIconVisible, setPublishIconVisible] = useState(false);
   const { _id, code, title, questions, isAvailable } = data;
-  console.log(data);
+  // console.log(data);
 
   const history = useHistory();
   const examPortal = useToken();
