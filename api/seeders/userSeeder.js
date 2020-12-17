@@ -14,7 +14,7 @@ module.exports = {
 
           const createdUser = await userToCreate.save();
           if (createdUser && users[users.length - 1].roleId === user.roleId) {
-            console.log("Successfully added the user seeder");
+            console.log("Successfully seeded user");
             resolve(createdUser);
           }
         } catch (err) {

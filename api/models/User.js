@@ -47,6 +47,7 @@ UserSchema.methods.toJSON = function () {
   return userObject;
 };
 
+// Salting and Hashing the user password with bcrypt
 UserSchema.statics.hashUserPassword = async function (password) {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -57,6 +58,8 @@ UserSchema.statics.hashUserPassword = async function (password) {
   }
 };
 
+
+// Generating and signing the user token                                   
 UserSchema.methods.generateToken = async function () {
   try {
     const userPayload = {

@@ -13,7 +13,7 @@ import UserRoute from './components/UserRoute';
 
 // redux things
 import { applyMiddleware, createStore } from 'redux';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { useToken } from './api/useToken';
 import { types } from './redux/types';
 import reducer from './redux';

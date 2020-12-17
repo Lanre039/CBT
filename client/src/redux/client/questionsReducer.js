@@ -11,7 +11,6 @@ export const questionsReducer = (state = initialState, action) => {
       return { ...state, questions: action.payload };
     case types.NEXT_QUESTION:
       if (state.currentIndex < state.questions.length - 1) {
-        console.log(state.currentIndex);
         return { ...state, currentIndex: state.currentIndex + 1 };
       } else {
         return { ...state };
