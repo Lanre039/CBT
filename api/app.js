@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
 
-const { seedDatabaseWithRoles } = require("./seeders/roleSeeder");
-const { seedDatabaseWithUsers } = require("./seeders/userSeeder");
+// const { seedDatabaseWithRoles } = require("./seeders/roleSeeder");
+// const { seedDatabaseWithUsers } = require("./seeders/userSeeder");
 const AuthRoute = require("./routes/AuthRoute");
 const CourseRoute = require("./routes/CourseRoute");
 const QuestionRoute = require("./routes/QuestionRoute");

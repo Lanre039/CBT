@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-export const useAuth = (tokenType) => {
+export const useAuth = (tokenType) => {                                 
   const { roles, currentLoggedInUserRoleId } = useSelector(
     (state) => state.roles
   );

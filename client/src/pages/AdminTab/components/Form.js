@@ -43,7 +43,10 @@ function Form({ onSubmit }) {
             maxLength={1}
             value={answer}
             // onChange={(e) => setData((data['answer'] = e.target.value))}
-            onChange={(e) => setAnswer(e.target.value)}
+            onChange={(e) => {
+              if (/^[a-d]+$/.test(e.target.value) || e.target.value === '')
+                setAnswer(e.target.value);
+            }}
           />
         </div>
         <div>

@@ -25,10 +25,10 @@ function AccordionComponent({ match }) {
   const addMoreQuestions = () => {
     const newId = items.length + 1;
 
-    if (items.length === 5) {
-      alert('You can only create five questions');
-      return;
-    }
+    // if (items.length === 5) {
+    //   alert('You can only create five questions');
+    //   return;
+    // }
 
     setItems([...items, <AccordionContent key={newId} id={newId} />]);
   };
